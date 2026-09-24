@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CustomTees Template Guide</title>
+<meta name="description" content="CustomTees: creating SVG artwork templates for apparel, following the Baby Shower reference file.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">3D Designer</a>
+    <span class="crumb">CustomTees · SVG only</span>
+    <nav class="switch" aria-label="Other guides"><a href="chubby-gorilla.html">3D only</a><a href="print-destination.html">3D + SVG</a><a href="customtees.html" aria-current="page">SVG only</a></nav>
+  </div>
+</header>
+
+<div class="wrap layout">
+<nav class="toc" aria-label="Contents">
+  <p class="toc-title">Contents</p>
+  <ol>
+    <li><a href="#overview">Before you start</a></li>
+    <li><a href="#prereq">Prerequisites &amp; settings</a></li>
+    <li><a href="#part-a">Create the artwork SVG</a></li>
+    <li><a href="#guidelines">Guidelines &amp; limits</a></li>
+    <li><a href="#avoid">What to avoid</a></li>
+    <li><a href="#checklist">Final checklist</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ol>
+</nav>
+
+<main>
+<p class="kicker">CustomTees · Updated 24 Sep 2026</p>
+<h1>Apparel Artwork Templates</h1>
+<p class="lead">How to create ready-made artwork (SVG) that shoppers personalise on t-shirts, hoodies and other apparel. There are no 3D files: you only supply the artwork. Every template follows the structure of our reference file, <a href="examples/baby-shower.svg" download>Baby Shower.svg</a>.</p>
+
+<!-- 1 -->
+<section id="overview">
+<h2><span class="num">1</span>Before you start</h2>
+<p>A template is one SVG made of two parts: <strong>live text</strong> the shopper can change, and <strong>flat vector shapes</strong> that make up the artwork. The garment colour shows through everywhere else.</p>
+<figure class="shot" data-shot="ct-c02-structure"><img src="images/ct-c02-structure.png" alt="Baby Shower artwork on a transparent background beside its layer structure: TEXT with three live text lines and SHAPES with five named groups, 24 paths in total" loading="lazy"><figcaption>The reference file: a <code>TEXT</code> group with the live text, and a <code>SHAPES</code> group split into named artwork groups. 24 paths in total.</figcaption></figure>
+<ol class="flow" aria-label="Workflow">
+  <li>Canvas<small>print-area ratio</small></li>
+  <li>Draw artwork<small>flat colours</small></li>
+  <li>Group it<small>TEXT + SHAPES</small></li>
+  <li>Merge paths<small>one per colour</small></li>
+  <li>Save &amp; check<small>text editor</small></li>
+</ol>
+<p class="note">One template fits one print area. For a design on the front and the back, make one SVG for each and name them as a pair (<code>baby-shower_front.svg</code>, <code>baby-shower_back.svg</code>).</p>
+</section>
+
+<!-- 2 -->
+<section id="prereq">
+<h2><span class="num">2</span>Prerequisites and required settings</h2>
+<h3>Software</h3>
+<ul>
+<li>Adobe Illustrator for designing.</li>
+<li>A text or code editor (VS Code, Notepad++) to check the saved SVG.</li>
+</ul>
+<h3>Settings to use every time</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Setting</th><th>Required value</th></tr></thead>
+<tbody>
+<tr><td>Canvas</td><td><code>viewBox</code> only, in px, in the print area's proportions (reference: <code>0 0 720 1080</code>, a 2 : 3 portrait)</td></tr>
+<tr><td>Background</td><td>Transparent; no background rectangle</td></tr>
+<tr><td>Top-level groups</td><td><code>TEXT</code> and <code>SHAPES</code></td></tr>
+<tr><td>Artwork groups</td><td>Inside <code>SHAPES</code>, one group per artwork element, CAPITALS with underscores (<code>L_BALLOON</code>, <code>BABY_CART</code>)</td></tr>
+<tr><td>Paths</td><td>At most <strong>300</strong> per file; one compound path per colour in each group</td></tr>
+<tr><td>Colours and fonts</td><td>Plain attributes: <code>fill="#49bce9"</code>, <code>font-size="93.72"</code>, no <code>&lt;style&gt;</code></td></tr>
+<tr><td>Not allowed</td><td>Gradients, mesh gradients, <code>clipPath</code>, masks, images, filters, nested layers beyond the two levels</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 3 -->
+<section id="part-a">
+<h2><span class="num">3</span>Create the artwork SVG</h2>
+<ol class="steps">
+<li><strong>Set the canvas.</strong> File → New, units Pixels, in the proportions of the print area. The reference is <strong>720 × 1080 px</strong> (2 : 3, portrait), which suits a full front or back. Use Color Mode RGB.
+<figure class="shot" data-shot="ct-c01-ai-new-document"><img src="images/ct-c01-ai-new-document.png" alt="Illustrator New Document dialog set to baby-shower_front, 720 by 1080 pixels, RGB" loading="lazy"><figcaption>File → New: name, 720 × 1080 px, units Pixels, Color Mode RGB.</figcaption></figure></li>
+<li><strong>Draw with flat colours only.</strong> Every shape is a solid fill. Leave the background empty so the garment colour shows. Keep the design within the canvas with a small margin all round.</li>
+<li><strong>Put all text in one <code>TEXT</code> layer.</strong> Each line is its own live text object (<code>YOUR TEXT HERE</code>, <code>BABY</code>, <code>SHOWER</code>), so shoppers can edit each one. Don't outline text.</li>
+<li><strong>Put all artwork in one <code>SHAPES</code> layer</strong>, split into one sub-group per element: <code>OTHER_SHAPS</code>, <code>SHIRTS_AND_ROPES</code>, <code>L_BALLOON</code>, <code>R_BALLOON</code>, <code>BABY_CART</code>. Illustrator saves each group name as the <code>id</code> (spaces become underscores) and keeps the original in <code>data-name</code>.</li>
+<li><strong>Merge each group into one path per colour.</strong> Select everything of one colour in a group and choose Object → Compound Path → Make (Ctrl+8). In the reference file each balloon group has 5 paths, one per colour, and the whole file has only 24. Stay under <strong>300 paths</strong>.</li>
+<li><strong>Remove what isn't allowed.</strong> No gradients, mesh gradients, clipping masks (<code>clipPath</code>), opacity masks, placed images, effects or shadows. Expand appearance and strokes into plain fills.</li>
+<li><strong>Save.</strong> File → Save As → SVG, then More Options: SVG 1.1, Preserve Illustrator Editing Capabilities off, <strong>CSS Properties = Presentation Attributes</strong> (so colours are saved as <code>fill="…"</code>, like the reference). Leave Responsive ticked; the reference has only a <code>viewBox</code>.</li>
+<li><strong>Check it in a text editor.</strong> Compare it with the reference structure below.
+<figure class="shot" data-shot="ct-c03-svg-structure"><img src="images/ct-c03-svg-structure.png" alt="Baby Shower SVG source with the svg viewBox, the TEXT group with three text elements and the SHAPES group with five named groups" loading="lazy"><figcaption>The reference source (paths shortened): (1) <code>viewBox</code> only, (2) <code>TEXT</code> group with one <code>&lt;text&gt;</code> per line, positioned with <code>transform="translate(…)"</code>, (3) <code>SHAPES</code> group with named sub-groups, one path per colour.</figcaption></figure></li>
+</ol>
+<pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080"&gt;
+  &lt;g id="TEXT"&gt;
+    &lt;text transform="translate(235.17 463.16)" font-size="93.72" fill="#fff"
+          font-family="DINRoundPro-Black, DIN Round Pro" font-weight="800"&gt;BABY&lt;/text&gt;
+  &lt;/g&gt;
+  &lt;g id="SHAPES"&gt;
+    &lt;g id="L_BALLOON" data-name="L BALLOON"&gt;
+      &lt;path d="M…Z" fill="#49bce9"/&gt;
+      &lt;path d="M…Z" fill="#ed4b67"/&gt;
+    &lt;/g&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;</code></pre>
+</section>
+
+<!-- 4 -->
+<section id="guidelines">
+<h2><span class="num">4</span>Guidelines, limitations and recommendations</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Limit or rule</th></tr></thead>
+<tbody>
+<tr><td>Paths</td><td>At most 300 per file</td></tr>
+<tr><td>Structure</td><td><code>TEXT</code> + <code>SHAPES</code>, with named artwork groups inside <code>SHAPES</code></td></tr>
+<tr><td>Colour</td><td>Flat fills only; no gradients or mesh</td></tr>
+<tr><td>Not supported</td><td><code>clipPath</code>, masks, images, filters, shadows, <code>&lt;style&gt;</code> tag</td></tr>
+<tr><td>Text</td><td>Live, one <code>&lt;text&gt;</code> per line, fonts from the designer font list</td></tr>
+<tr><td>Fine detail</td><td>Lines at least 1 pt thick, text at least 8 pt, or it may not print cleanly on fabric</td></tr>
+</tbody></table></div>
+<h3>Recommendations</h3>
+<ul>
+<li>Open <a href="examples/baby-shower.svg" download>Baby Shower.svg</a> and copy its structure for every new design.</li>
+<li>Use a few solid colours that work on both light and dark garments.</li>
+<li>Name artwork groups by what they are (<code>L_BALLOON</code>, <code>BABY_CART</code>), not <code>Group 12</code>.</li>
+<li>Don't use team crests, brand logos or characters unless you have the rights to them.</li>
+</ul>
+</section>
+
+<!-- 5 -->
+<section id="avoid">
+<h2><span class="num">5</span>What to avoid</h2>
+<h3>File and structure</h3>
+<div class="table-wrap"><table class="avoid">
+<thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
+<tbody>
+<tr><td>More than 300 paths</td><td>The template loads slowly or fails</td><td>Merge same-colour shapes into one compound path per group</td></tr>
+<tr><td>Many nested layers or unnamed groups</td><td>Artwork is hard to manage and may not load</td><td>Just <code>TEXT</code> and <code>SHAPES</code>, with named groups inside <code>SHAPES</code></td></tr>
+<tr><td>A background rectangle</td><td>A coloured box prints on the garment</td><td>Leave the background transparent</td></tr>
+<tr><td><code>&lt;style&gt;</code> tag or CSS classes</td><td>Colours are lost or the file fails to load</td><td>Save with Presentation Attributes</td></tr>
+<tr><td>Front and back in one file</td><td>The design can't be placed on two print areas</td><td>One SVG per print area, named as a pair</td></tr>
+</tbody></table></div>
+<h3>Artwork</h3>
+<div class="table-wrap"><table class="avoid">
+<thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
+<tbody>
+<tr><td>Gradients or mesh gradients</td><td>Not supported; the file fails or prints flat</td><td>Solid colours</td></tr>
+<tr><td>Clipping masks (<code>clipPath</code>) or opacity masks</td><td>Hidden parts reappear or the file fails</td><td>Cut shapes to their final outline with Pathfinder</td></tr>
+<tr><td>Placed or embedded images</td><td>Not supported in apparel templates</td><td>Redraw as vector shapes</td></tr>
+<tr><td>Effects, shadows, glows or live strokes</td><td>Lost on save or printed incorrectly</td><td>Expand them into plain filled shapes</td></tr>
+<tr><td>Very thin lines or tiny text</td><td>Detail fills in or breaks up on fabric</td><td>Lines at least 1 pt, text at least 8 pt</td></tr>
+</tbody></table></div>
+<h3>Text</h3>
+<div class="table-wrap"><table class="avoid">
+<thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
+<tbody>
+<tr><td>Text converted to outlines</td><td>Shoppers can't change it</td><td>Keep text live in the <code>TEXT</code> group</td></tr>
+<tr><td>Several lines in one text box</td><td>Lines can't be edited or moved separately</td><td>One text object per line</td></tr>
+<tr><td>Fonts not in the designer font list</td><td>A default font replaces yours</td><td>Use only enabled fonts</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 6 -->
+<section id="checklist">
+<h2><span class="num">6</span>Final checklist</h2>
+<ul class="check">
+<li><label><input type="checkbox"> <code>viewBox</code> in px, in the print area's proportions; transparent background</label></li>
+<li><label><input type="checkbox"> Two top-level groups: <code>TEXT</code> and <code>SHAPES</code></label></li>
+<li><label><input type="checkbox"> Artwork in named groups inside <code>SHAPES</code></label></li>
+<li><label><input type="checkbox"> One compound path per colour per group; 300 paths or fewer in total</label></li>
+<li><label><input type="checkbox"> Flat colours saved as <code>fill="…"</code>; no gradients or mesh</label></li>
+<li><label><input type="checkbox"> No <code>clipPath</code>, masks, images, filters or <code>&lt;style&gt;</code></label></li>
+<li><label><input type="checkbox"> Live text, one <code>&lt;text&gt;</code> per line, enabled fonts only</label></li>
+<li><label><input type="checkbox"> Checked on a light and a dark background</label></li>
+</ul>
+</section>
+
+<!-- 7 -->
+<section id="troubleshooting">
+<h2><span class="num">7</span>Troubleshooting</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Problem</th><th>Likely cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Template fails to load</td><td>Over 300 paths, clipPath, gradients or a <code>&lt;style&gt;</code> tag</td><td>Merge paths, remove clipping and gradients, save with Presentation Attributes</td></tr>
+<tr><td>Colours missing or black</td><td>Colours saved in a <code>&lt;style&gt;</code> block or as gradients</td><td>Re-save with Presentation Attributes and flat fills</td></tr>
+<tr><td>Parts of the artwork missing</td><td>A clipping mask was removed on load</td><td>Release the mask and cut the shapes with Pathfinder</td></tr>
+<tr><td>Coloured box behind the design</td><td>Background rectangle left in</td><td>Delete it</td></tr>
+<tr><td>Text can't be edited</td><td>Text converted to outlines</td><td>Replace with live text in the <code>TEXT</code> group</td></tr>
+<tr><td>Wrong font in the designer</td><td>Font not enabled</td><td>Use an enabled font</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 8 -->
+<section id="resources">
+<h2><span class="num">8</span>Documentation and tools</h2>
+<ul>
+<li><a href="examples/baby-shower.svg" download>Baby Shower.svg</a> — the reference template</li>
+<li><a href="https://helpx.adobe.com/illustrator/using/svg.html">Adobe: Save artwork as SVG</a> — SVG options in Illustrator</li>
+<li><a href="https://helpx.adobe.com/illustrator/using/compound-paths.html">Adobe: Compound paths</a> — merging shapes to keep the path count low</li></ul>
+</section>
+</main>
+</div>
+
+<footer class="foot"><div class="wrap">3D Designer — CustomTees template guide (SVG only). Other guides: <a href="chubby-gorilla.html">3D only</a> · <a href="print-destination.html">3D + SVG</a></div></footer>
+
+<script>
+document.querySelectorAll('figure.shot img').forEach(function (img) {
+  function miss() { img.closest('figure').classList.add('missing'); }
+  if (img.complete && img.naturalWidth === 0) miss();
+  img.addEventListener('error', miss);
+});
+</script>
+</body>
+</html>

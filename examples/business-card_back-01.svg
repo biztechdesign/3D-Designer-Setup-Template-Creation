@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 208" width="3.543in" height="2.165in">
+  <!-- Fonts required: Poppins 400/700 -->
+  <g id="Layer_1" data-name="Background"><rect x="0" y="0" width="340" height="208" style="fill:#F2A541;"/></g>
+  <g id="Text-1" data-name="Text-1">
+    <text x="170" y="92" style="font-family:Poppins, Arial, sans-serif;font-size:20px;font-weight:700;fill:#0B3C5D;text-anchor:middle;">
+      <tspan x="170" y="92">0400 123 456</tspan>
+    </text>
+  </g>
+  <g id="Text-2" data-name="Text-2">
+    <text x="170" y="116" style="font-family:Poppins, Arial, sans-serif;font-size:13px;font-weight:400;fill:#0B3C5D;text-anchor:middle;">
+      <tspan x="170" y="116">www.janesmith.design</tspan>
+    </text>
+  </g>
+  <g id="Text-3" data-name="Text-3">
+    <text x="170" y="136" style="font-family:Poppins, Arial, sans-serif;font-size:13px;font-weight:400;fill:#0B3C5D;text-anchor:middle;">
+      <tspan x="170" y="136">hello@janesmith.design</tspan>
+    </text>
+  </g>
+</svg>

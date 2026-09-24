@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Print Destination Setup Guide</title>
+<meta name="description" content="Print Destination: preparing 3D products (GLB + design-area SVG) and print template SVGs for the 3D Designer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">3D Designer</a>
+    <span class="crumb">Print Destination · 3D + SVG</span>
+    <nav class="switch" aria-label="Other guides"><a href="chubby-gorilla.html">3D only</a><a href="print-destination.html" aria-current="page">3D + SVG</a><a href="customtees.html">SVG only</a></nav>
+  </div>
+</header>
+
+<div class="wrap layout">
+<nav class="toc" aria-label="Contents">
+  <p class="toc-title">Contents</p>
+  <ol>
+    <li><a href="#overview">Before you start</a></li>
+    <li><a href="#prereq">Prerequisites &amp; settings</a></li>
+    <li><a href="#part-a">Part A: 3D object (GLB)</a></li>
+    <li><a href="#part-b">Part B: Design-area SVG</a></li>
+    <li><a href="#part-c">Part C: Template SVG</a></li>
+    <li><a href="#guidelines">Guidelines &amp; limits</a></li>
+    <li><a href="#avoid">What to avoid</a></li>
+    <li><a href="#checklist">Final checklist</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ol>
+</nav>
+
+<main>
+<p class="kicker">Print Destination · Updated 24 Sep 2026</p>
+<h1>3D Products &amp; Print Templates</h1>
+<p class="lead">How to prepare printed products such as business cards, brochures and QR code stands so shoppers can design them on a flat canvas and see the result on a 3D model. Each product needs a 3D model and an SVG that match each other exactly. This guide uses a two-sided business card, front and back, as the example throughout.</p>
+
+<!-- 1 -->
+<section id="overview">
+<h2><span class="num">1</span>Before you start</h2>
+<p>Each product has three kinds of file. Every printable face of the model (front, back, inside…) is its own mesh with its <strong>own UV map</strong>, its <strong>own design-area SVG</strong> and its <strong>own template</strong>, all named after the face.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>File</th><th>What it does</th><th>Example (business card)</th></tr></thead>
+<tbody>
+<tr><td>3D object (.glb)</td><td>The 3D model shown in the live preview. Each printable face is a separate mesh with the <code>Designarea</code> material.</td><td><code>business-card-90x55.glb</code> with meshes <code>Front1</code> and <code>Back1</code></td></tr>
+<tr><td>Design-area SVG (.svg)</td><td>A flat map of one printable face, drawn from that face's UV map. One file per face. What the shopper puts on it appears on that face of the model.</td><td><a href="examples/business-card_front_designarea.svg" download><code>business-card_front_designarea.svg</code></a> (group <code>Front1</code>) and <a href="examples/business-card_back_designarea.svg" download><code>business-card_back_designarea.svg</code></a> (group <code>Back1</code>)</td></tr>
+<tr><td>Template SVGs (.svg)</td><td>Ready-made designs, one per printable face, that shoppers edit.</td><td><a href="examples/business-card_front-01.svg" download><code>business-card_front-01.svg</code></a>, <a href="examples/business-card_back-01.svg" download><code>business-card_back-01.svg</code></a></td></tr>
+</tbody></table></div>
+<figure class="shot" data-shot="pd-match-front-back"><img src="images/pd-match-front-back.png" alt="Design-area SVG with Front1 and Back1 areas beside the 3D business card showing the same artwork on its front and back" loading="lazy"><figcaption>How the files work together: artwork inside <code>Front1</code> in the SVG appears on the front of the 3D card, and artwork inside <code>Back1</code> appears on the back.</figcaption></figure>
+<ol class="flow" aria-label="Workflow">
+  <li>Source model<small>real size, in mm</small></li>
+  <li>Printable faces<small>Front1, Back1…</small></li>
+  <li>UVs &amp; export<small>GLB + UV layout</small></li>
+  <li>Design-area SVG<small>outlines per face</small></li>
+  <li>Template SVGs<small>one per face</small></li>
+  <li>Final check<small>checklist</small></li>
+</ol>
+<p class="note">The GLB and design-area SVG must match: SVG group ids equal the GLB mesh names, and both come from the same UV map. If either file changes, update the other.</p>
+</section>
+
+<!-- 2 -->
+<section id="prereq">
+<h2><span class="num">2</span>Prerequisites and required settings</h2>
+<p>You need the free tools below and one person comfortable with basic 3D and vector editing.</p>
+<h3>Software</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Tool</th><th>Used for</th><th>Version</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.blender.org/download/">Blender</a> (free)</td><td>Building the model, UV mapping, GLB export</td><td>4.0 or newer</td></tr>
+<tr><td>Adobe Illustrator</td><td>Drawing and checking SVG files</td><td>Any current version</td></tr>
+<tr><td>Text or code editor (VS Code, Notepad++)</td><td>Checking SVG ids and removing unsupported tags</td><td>Any</td></tr>
+<tr><td><a href="https://gltf-viewer.donmccurdy.com/">glTF Viewer</a> or <a href="https://sandbox.babylonjs.com/">Babylon.js Sandbox</a></td><td>Checking the exported GLB</td><td>—</td></tr>
+</tbody></table></div>
+<h3>Settings to use every time</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Setting</th><th>Required value</th></tr></thead>
+<tbody>
+<tr><td>Blender scene units</td><td>Metric, millimetres, until the final scale step</td></tr>
+<tr><td>Orientation</td><td>Front of the product faces the viewer (−Y in Blender); export with <strong>+Y Up</strong></td></tr>
+<tr><td>Printable faces</td><td>One mesh per face, e.g. <code>Front1</code>, <code>Back1</code>, <code>Inside1</code>, material <code>Designarea</code></td></tr>
+<tr><td>UV map</td><td>One per mesh, named <code>UVMap</code>; each printable face fills its own 0–1 square</td></tr>
+<tr><td>Names</td><td>Letters, numbers and underscores only; no <code>.001</code> suffixes, no duplicates</td></tr>
+<tr><td>SVG size</td><td>At most <strong>300 paths</strong> per file</td></tr>
+<tr><td>SVG content</td><td>Flat colours and inline styles; no gradients, no <code>clipPath</code>, no complex mesh or nested layers</td></tr>
+</tbody></table></div>
+<figure class="shot" data-shot="a00-blender-units"><img src="images/a00-blender-units.png" alt="Blender Scene Properties with Unit System set to Metric and Length set to Millimeters" loading="lazy"><figcaption>Blender → Scene Properties → Units: Metric, Millimeters.</figcaption></figure>
+</section>
+
+<!-- 3 -->
+<section id="part-a">
+<h2><span class="num">3</span>Part A: Build the 3D object (GLB)</h2>
+<p>The goal is a light GLB where every printable face is its own named mesh with one tidy UV map, scaled to fit the designer's viewing box.</p>
+<ol class="steps">
+<li><strong>Build or import the product at real size.</strong> A business card is 90 × 55 mm and about 0.35 mm thick. Press N and check the Dimensions against the real product.
+<figure class="shot" data-shot="pd-a01-card-dimensions"><img src="images/pd-a01-card-dimensions.png" alt="Business card in Blender with the Item panel showing 90 by 0.35 by 55 mm" loading="lazy"><figcaption>Sidebar (N) → Item → Dimensions: 90 × 0.35 × 55 mm.</figcaption></figure></li>
+<li><strong>Make one mesh per printable face.</strong> Add a flat plane over each face shoppers can print on, sitting about <strong>0.05 mm</strong> outside the product so it isn't hidden. The product body itself (card edge, stand base, acrylic) keeps a plain non-printable material.
+<div class="table-wrap"><table>
+<thead><tr><th>Product</th><th>Printable meshes</th></tr></thead>
+<tbody>
+<tr><td>Business card, postcard, flyer</td><td><code>Front1</code>, <code>Back1</code></td></tr>
+<tr><td>Folded brochure (e.g. A4 folded to DL)</td><td><code>Outside1</code>, <code>Inside1</code></td></tr>
+<tr><td>QR code stand, table tent</td><td><code>Front1</code>, <code>Back1</code> (the insert only, not the base)</td></tr>
+</tbody></table></div></li>
+<li><strong>Name and group them.</strong> Each printable mesh sits inside an empty parent named the same without the <code>1</code>:
+<pre><code>Front  (Empty)  →  Front1  (Mesh, Designarea)
+Back   (Empty)  →  Back1   (Mesh, Designarea)
+Card   (Empty)  →  Card1   (Mesh, paper; not printable)</code></pre></li>
+<li><strong>Assign the <code>Designarea</code> material</strong> to every printable mesh: Principled BSDF, Base Color light grey <code>#E5E5E5</code>, Metallic 0, Roughness 0.5. No textures, colours or finishes; the designer applies the shopper's design.
+<figure class="shot" data-shot="pd-a03-designarea-material"><img src="images/pd-a03-designarea-material.png" alt="Material Properties of Front1 showing the Designarea material" loading="lazy"><figcaption>Material Properties → <code>Designarea</code>: Base Color #E5E5E5, Metallic 0, Roughness 0.5.</figcaption></figure></li>
+<li><strong>Give each face its own UV map.</strong> Unwrap each printable mesh on its own so the face fills the <strong>whole</strong> 0–1 UV square. Front and back are never placed together in one UV layout.
+<ul>
+<li>The design-area SVG for the face uses the same proportions (90 : 55 → 1024 × 626), so nothing stretches.</li>
+<li>Turn the back face in the UV itself so its artwork reads correctly when the product is turned over. Don't use a Mapping node; it is lost on export.</li>
+</ul>
+Check with Blender's Color Grid on each face: cells stay square and letters read the right way round on <strong>both</strong> sides.
+<figure class="shot" data-shot="pd-a05-uv-front-back"><img src="images/pd-a05-uv-front-back.png" alt="Front1 and Back1 each with its own full UV square, beside the card's front and back showing the colour grid" loading="lazy"><figcaption>Each face has its own full UV square. The whole grid (A1–H8) appears on the front and again on the back, both reading correctly.</figcaption></figure></li>
+<li><strong>Apply transforms.</strong> Select all, then Object → Apply → All Transforms, so rotation is 0 and scale is 1.
+<figure class="shot" data-shot="a06-apply-transforms"><img src="images/a06-apply-transforms.png" alt="Object menu open at Apply, All Transforms" loading="lazy"><figcaption>Object → Apply → All Transforms (Ctrl+A).</figcaption></figure></li>
+<li><strong>Scale to the designer box.</strong> Save an <code>_mm</code> backup first. Then scale the whole model uniformly so it fits inside <strong>6.333 (W) × 4.890 (D) × 8.711 (H)</strong> units, centred on the origin. Wide products like business cards are limited by width: 90 mm becomes 6.333.
+<figure class="shot" data-shot="pd-a07-fit-box"><img src="images/pd-a07-fit-box.png" alt="Business card centred inside a wireframe box of 6.333 by 4.890 by 8.711 units" loading="lazy"><figcaption>The card fills the box's width. Delete the box before exporting.</figcaption></figure></li>
+<li><strong>Export the GLB.</strong> File → Export → glTF 2.0:
+<div class="table-wrap"><table>
+<thead><tr><th>Export setting</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Format</td><td>glTF Binary (.glb)</td></tr>
+<tr><td>Include</td><td>Visible objects; no cameras, no lights</td></tr>
+<tr><td>Transform</td><td>+Y Up</td></tr>
+<tr><td>Mesh</td><td>Apply Modifiers, UVs, Normals on</td></tr>
+<tr><td>Compression</td><td>Off</td></tr>
+</tbody></table></div>
+<figure class="shot" data-shot="a08-gltf-export"><img src="images/a08-gltf-export.png" alt="Blender glTF 2.0 export dialog with GLB format and +Y Up selected" loading="lazy"><figcaption>glTF 2.0 export dialog with the settings above.</figcaption></figure></li>
+<li><strong>Check the export.</strong> Open the GLB in a browser viewer, turn it over and confirm both printable faces are there, grey and named <code>Front1</code> / <code>Back1</code>. Target under 5 MB.</li>
+</ol>
+</section>
+
+<!-- 4 -->
+<section id="part-b">
+<h2><span class="num">4</span>Part B: Create the design-area SVGs</h2>
+<p>Every printable face gets its <strong>own</strong> design-area SVG, drawn from that face's own UV map. For a business card that is two files: <a href="examples/business-card_front_designarea.svg" download><code>business-card_front_designarea.svg</code></a> (group <code>Front1</code>) and <a href="examples/business-card_back_designarea.svg" download><code>business-card_back_designarea.svg</code></a> (group <code>Back1</code>). Never put two faces in one file.</p>
+<ol class="steps">
+<li><strong>Export the UV layout of one face.</strong> Select only <code>Front1</code>, enter Edit Mode, then in the UV Editor choose UV → Export UV Layout. Format SVG, Fill Opacity 0, and a size in the face's proportions: width 1024, height = 1024 × face height ÷ face width. For a 90 × 55 mm card that is <strong>1024 × 626</strong>. Repeat for <code>Back1</code>.
+<figure class="shot" data-shot="b01-export-uv-layout"><img src="images/b01-export-uv-layout.png" alt="Blender Export UV Layout dialog with SVG format, size fields and fill opacity" loading="lazy"><figcaption>UV → Export UV Layout: (1) SVG, (2) size in the face's proportions (1024 × 626 for a business card), (3) Fill Opacity 0.</figcaption></figure></li>
+<li><strong>Open it in Illustrator.</strong> The artboard must be exactly the export size. Because the face fills its whole UV square, its outline is the whole artboard: one rectangle from corner to corner.</li>
+<li><strong>Group and name it like the mesh.</strong> Put the outline in one group named exactly like the GLB mesh (<code>Front1</code> in the front file, <code>Back1</code> in the back file), with a matching <code>data-name</code>.</li>
+<li><strong>Keep it simple.</strong> One flat fill on the group, e.g. <code>style="fill:#ccc;"</code>. No strokes, gradients, clipPath or classes.</li>
+<li><strong>Save and check.</strong> File → Save As → SVG, then More Options: SVG 1.1, Preserve Illustrator Editing Capabilities off, CSS Properties = Style Attributes. Compare both files with the example.
+<figure class="shot" data-shot="b05-ai-svg-options"><img src="images/b05-ai-svg-options.png" alt="Illustrator SVG Options dialog with SVG 1.1 and Style Attributes selected" loading="lazy"><figcaption>SVG Options: (1) SVG 1.1, (2) Preserve Illustrator Editing Capabilities off, (3) CSS Properties = Style Attributes. Leave Responsive unticked.</figcaption></figure>
+<figure class="shot" data-shot="pd-b-designarea-code"><img src="images/pd-b-designarea-code.png" alt="Source of the front and back design-area SVGs, each 1024 by 626 with one group named Front1 or Back1" loading="lazy"><figcaption>The two design-area files: same size, one group each, named <code>Front1</code> and <code>Back1</code> to match the meshes.</figcaption></figure></li>
+</ol>
+<p class="note">The coordinate link is fixed: SVG x = U × canvas width and SVG y = (1 − V) × canvas height, for each face on its own. Never move, rotate or rescale the outline after export, and keep the canvas in the face's proportions, or the design stretches on the model.</p>
+</section>
+
+<!-- 5 -->
+<section id="part-c">
+<h2><span class="num">5</span>Part C: Create the template SVGs</h2>
+<p>A template is a ready-made design shoppers personalise. Make <strong>one template per printable face</strong>: a business card has a front template and a back template, and they are used as a pair.</p>
+<figure class="shot" data-shot="pd-c02-templates-front-back"><img src="images/pd-c02-templates-front-back.png" alt="Business card front template in navy with a name and back template in orange with contact details" loading="lazy"><figcaption>A matching pair: <a href="examples/business-card_front-01.svg" download>front</a> and <a href="examples/business-card_back-01.svg" download>back</a> templates (click to download).</figcaption></figure>
+<ol class="steps">
+<li><strong>Set the canvas from the product size.</strong> Canvas in px = size in mm × 96 ÷ 25.4. Set <code>viewBox</code> in px and <code>width</code>/<code>height</code> in inches.
+<div class="table-wrap"><table>
+<thead><tr><th>Product</th><th>Face size</th><th>Canvas (px)</th><th>width × height</th></tr></thead>
+<tbody>
+<tr><td>Business card</td><td>90 × 55 mm</td><td>340 × 208</td><td>3.543in × 2.165in</td></tr>
+<tr><td>DL (brochure panel, flyer)</td><td>99 × 210 mm</td><td>374 × 794</td><td>3.898in × 8.268in</td></tr>
+<tr><td>A5</td><td>148 × 210 mm</td><td>559 × 794</td><td>5.827in × 8.268in</td></tr>
+<tr><td>A4</td><td>210 × 297 mm</td><td>794 × 1122</td><td>8.268in × 11.693in</td></tr>
+</tbody></table></div>
+<figure class="shot" data-shot="pd-c01-ai-new-document"><img src="images/pd-c01-ai-new-document.png" alt="Illustrator New Document dialog set to business-card_front-01, 340 by 208 pixels, RGB" loading="lazy"><figcaption>Illustrator → File → New for a business card: name, 340 × 208 px, units Pixels, Color Mode RGB.</figcaption></figure></li>
+<li><strong>Design inside the safe zone.</strong> Keep text and logos at least 3 mm (about 12 px) inside the trim line. Take background colours to the edge.</li>
+<li><strong>Build a flat layer list.</strong> Every group is a direct child of the <code>&lt;svg&gt;</code>, with no nested layers:
+<ul>
+<li><code>Layer_1</code>, <code>Layer_2</code> … large blocks (background, header, footer)</li>
+<li><code>Elem-1</code>, <code>Elem-2</code> … shapes and decorations</li>
+<li><code>Text-1</code>, <code>Text-2</code> … text</li>
+</ul>
+Every group needs both <code>id</code> and <code>data-name</code>.</li>
+<li><strong>Keep text live.</strong> Put <code>x</code> and <code>y</code> on both the <code>&lt;text&gt;</code> and each <code>&lt;tspan&gt;</code>, or the text jumps to the top-left corner. Do not convert text to outlines.</li>
+<li><strong>Keep it light.</strong> At most <strong>300 paths</strong> per file. Merge shapes of the same colour into one compound path, and simplify traced or imported artwork.</li>
+<li><strong>Remove unsupported features.</strong> No <code>clipPath</code>, gradients, mesh gradients, filters or shadows, <code>&lt;style&gt;</code> tag, CSS classes, or <code>transform="matrix(...)"</code>. If a photo or logo is part of the design, place it as a plain <code>&lt;image&gt;</code> at its final size, with no clipping.</li>
+<li><strong>Save and check.</strong> Save as SVG 1.1 with Style Attributes and Responsive unticked (so width and height are kept), then open it in a text editor and compare it with the example.
+<figure class="shot" data-shot="pd-c03-svg-in-editor"><img src="images/pd-c03-svg-in-editor.png" alt="Business card front template source showing viewBox, flat groups and text with tspan" loading="lazy"><figcaption>The saved front template: (1) viewBox in px with width/height in inches, (2) flat groups with id and data-name, (3) x/y on both &lt;text&gt; and &lt;tspan&gt;.</figcaption></figure></li>
+</ol>
+<p class="note"><strong>Special templates.</strong> Calendars and coupon or postcard layouts have extra required IDs and data attributes (for example <code>&lt;g id="calendar"&gt;</code> with grid data). Ask us for the matching specification before you build one.</p>
+</section>
+
+<!-- 6 -->
+<section id="guidelines">
+<h2><span class="num">6</span>Guidelines, limitations and recommendations</h2>
+<h3>Limits</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Limit or rule</th></tr></thead>
+<tbody>
+<tr><td>GLB file size</td><td>Target under 5 MB; keep polygons as low as the shape allows</td></tr>
+<tr><td>Printable faces</td><td>One mesh per face shoppers print on (front, back, inside, outside)</td></tr>
+<tr><td>Materials</td><td><code>Designarea</code> on printable faces; plain values only. Mapping, Mix or procedural nodes do not survive export</td></tr>
+<tr><td>UV maps</td><td>One per face, each filling its own 0–1 square</td></tr>
+<tr><td>Design-area SVG</td><td>One file per face, 1024 px wide in the face's proportions, one group with id equal to the mesh name</td></tr>
+<tr><td>Any SVG</td><td>At most 300 paths; flat colours; no gradients, clipPath, mesh or nested layers</td></tr>
+<tr><td>Template SVG</td><td>One per face; flat layers, live text, inline styles</td></tr>
+<tr><td>Images in templates</td><td>Plain <code>&lt;image&gt;</code> at final size, 300 DPI at print size, no clipping</td></tr>
+<tr><td>Fonts</td><td>Only fonts enabled in your designer font list; others fall back to a default font</td></tr>
+</tbody></table></div>
+<h3>Recommendations</h3>
+<ul>
+<li>Start from a product we have already set up and copy its face names and UV layout.</li>
+<li>Build one product end to end before starting a batch.</li>
+<li>Keep an <code>_mm</code> master .blend for every product so you can re-scale or re-unwrap later.</li>
+<li>Keep file names short and paired: <code>business-card_front_designarea.svg</code>, <code>business-card_back_designarea.svg</code>, <code>business-card_front-01.svg</code>, <code>business-card_back-01.svg</code>.</li>
+<li>Change the GLB and the design-area SVG together. A re-unwrapped model always needs a new design-area SVG.</li>
+<li>Remove third-party logos or copyrighted artwork from templates unless you have the rights to use them.</li>
+</ul>
+</section>
+
+<!-- 7 -->
+<section id="avoid">
+<h2><span class="num">7</span>What to avoid</h2>
+<p>These are the mistakes that most often break a Print Destination product. Most of them only show up once the GLB and SVG are used together.</p>
+<h3>3D object (GLB)</h3>
+<div class="table-wrap"><table class="avoid">
+<thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
+<tbody>
+<tr><td>Hiding parts instead of deleting them</td><td>Hidden parts still export and add weight or cover print surfaces</td><td>Delete everything shoppers can't see</td></tr>
+<tr><td>Textures, colours or finishes baked into <code>Designarea</code></td><td>The shopper's design is tinted or hidden</td><td>Plain light grey, no textures</td></tr>
+<tr><td>Flipping the back face with a Mapping node</td><td>Mapping nodes are lost on export, so text on the back is mirrored</td><td>Flip the back face in the UV itself</td></tr>
+<tr><td>Overlapping or stretched UVs</td><td>Designs repeat, stretch or land in the wrong place</td><td>One clean UV map per mesh; square checker cells</td></tr>
+<tr><td>A print surface inside or flush with a solid part</td><td>The surface is hidden or flickers</td><td>Place it about 0.05 mm outside</td></tr>
+<tr><td>Transforms not applied, or exported without +Y Up</td><td>Model is tiny, huge, off-centre or lying on its side</td><td>Apply all transforms, fit the designer box, export with +Y Up</td></tr>
+<tr><td>Heavy models (over 5 MB) or Draco compression</td><td>Slow or failed loading in the designer</td><td>Reduce polygons; leave compression off</td></tr>
+<tr><td>Names with <code>.001</code>, spaces or duplicates</td><td>The GLB mesh can't be matched to its SVG group</td><td>Letters, numbers and underscores only, each name unique</td></tr>
+</tbody></table></div>
+<h3>Design-area SVG</h3>
+<div class="table-wrap"><table class="avoid">
+<thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
+<tbody>
+<tr><td>Moving, rotating or rescaling outlines after UV export</td><td>Designs land in the wrong place on the model</td><td>Leave outlines exactly where Blender exported them</td></tr>
+<tr><td>Front and back in one SVG or one UV layout</td><td>Designs land on the wrong face or overlap</td><td>One UV map and one design-area SVG per face</td></tr>
+<tr><td>A canvas in different proportions from the face</td><td>The design stretches on the model</td><td>Width 1024, height in the face's proportions (1024 × 626 for a business card)</td></tr>
+<tr><td>Group ids that differ from the GLB mesh names</td><td>The design doesn't appear on that part</td><td><code>id</code> = mesh name exactly</td></tr>
+<tr><td>Leaving the inner triangle and quad lines</td><td>Heavy file and a messy canvas for shoppers</td><td>Keep only the outer boundary of each island</td></tr>
+<tr><td>Strokes, classes or a <code>&lt;style&gt;</code> block</td><td>The canvas renders incorrectly</td><td>One inline fill per group</td></tr>
+<tr><td>Changing the GLB without redoing the SVG</td><td>Old outlines no longer match the new UVs</td><td>Always update both files together</td></tr>
+</tbody></table></div>
+<h3>Template SVG</h3>
+<div class="table-wrap"><table class="avoid">
+<thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
+<tbody>
+<tr><td>Nested groups or layers</td><td>Elements can't be selected or edited separately</td><td>Flat groups directly under <code>&lt;svg&gt;</code></td></tr>
+<tr><td>Text converted to outlines</td><td>Shoppers can't edit the text</td><td>Keep text live</td></tr>
+<tr><td>x/y only on <code>&lt;tspan&gt;</code></td><td>Text jumps to the top-left corner</td><td>Put x/y on both <code>&lt;text&gt;</code> and <code>&lt;tspan&gt;</code></td></tr>
+<tr><td>More than 300 paths</td><td>The template loads slowly or fails in the designer</td><td>Merge same-colour shapes into compound paths; simplify traced artwork</td></tr>
+<tr><td>Gradients, mesh gradients or complex mesh objects</td><td>Not supported; the template fails or prints flat</td><td>Solid colours</td></tr>
+<tr><td>Any <code>clipPath</code> or clipping mask</td><td>Parts of the design disappear or the file fails</td><td>Crop images to size before placing; no clipping at all</td></tr>
+<tr><td><code>&lt;style&gt;</code> tag, CSS classes, filters, shadows, <code>transform="matrix(...)"</code></td><td>The template fails to load or looks different</td><td>Inline styles, plain x/y positions</td></tr>
+<tr><td>One template for both sides</td><td>Front and back can't be placed on their own faces</td><td>One template per face, named as a pair</td></tr>
+<tr><td>Fonts not enabled in the designer</td><td>A default font replaces yours</td><td>Use only enabled fonts; list them in a comment</td></tr>
+<tr><td>Low-resolution images</td><td>Blurry print</td><td>300 DPI at print size</td></tr>
+<tr><td>Text or logos near the trim line</td><td>They get cut off when printed</td><td>Keep them at least 3 mm inside</td></tr>
+<tr><td>Third-party logos or artwork</td><td>Copyright problems</td><td>Only artwork you have the rights to</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 8 -->
+<section id="checklist">
+<h2><span class="num">8</span>Final checklist</h2>
+<p>Tick every item for each product. One unticked item is usually the cause of a failed preview.</p>
+<div class="checks">
+<div>
+<h3>3D object (GLB)</h3>
+<ul class="check">
+<li><label><input type="checkbox"> One mesh per printable face (<code>Front1</code>, <code>Back1</code>…), each in its empty parent, no <code>.001</code></label></li>
+<li><label><input type="checkbox"> Printable meshes use <code>Designarea</code>, light grey, no textures</label></li>
+<li><label><input type="checkbox"> Each face has its own UV map filling the whole 0–1 square</label></li>
+<li><label><input type="checkbox"> Back face turned in the UV; Color Grid reads correctly on both sides</label></li>
+<li><label><input type="checkbox"> Print faces sit 0.05 mm outside the product body</label></li>
+<li><label><input type="checkbox"> Transforms applied; fits inside 6.333 × 4.890 × 8.711 and centred</label></li>
+<li><label><input type="checkbox"> Exported as .glb, +Y Up, no cameras or lights, under 5 MB</label></li>
+<li><label><input type="checkbox"> Opens in a browser viewer; both faces present when turned over</label></li>
+</ul>
+</div>
+<div>
+<h3>Design-area SVG</h3>
+<ul class="check">
+<li><label><input type="checkbox"> Square canvas, <code>viewBox</code> 0 0 1024 1024 (or 2048)</label></li>
+<li><label><input type="checkbox"> One group, <code>id</code> = mesh name (<code>Front1</code> or <code>Back1</code>), with <code>data-name</code></label></li>
+<li><label><input type="checkbox"> One file per face, canvas in the face's proportions, outline covers the canvas</label></li>
+<li><label><input type="checkbox"> No <code>&lt;style&gt;</code>, classes, strokes, gradients, clipPath or transforms</label></li>
+</ul>
+<h3>Template SVG</h3>
+<ul class="check">
+<li><label><input type="checkbox"> One template per face (front and back as a pair)</label></li>
+<li><label><input type="checkbox"> Canvas matches the face size; viewBox in px, width/height in inches</label></li>
+<li><label><input type="checkbox"> 300 paths or fewer; no gradients, clipPath or mesh</label></li>
+<li><label><input type="checkbox"> All groups direct children of <code>&lt;svg&gt;</code>, named Layer_N / Elem-N / Text-N</label></li>
+<li><label><input type="checkbox"> Text is live, with x/y on both <code>&lt;text&gt;</code> and <code>&lt;tspan&gt;</code></label></li>
+<li><label><input type="checkbox"> Only enabled fonts used</label></li>
+<li><label><input type="checkbox"> No <code>&lt;style&gt;</code>, filters, gradients or matrix transforms</label></li></ul>
+</div>
+</div>
+</section>
+
+<!-- 9 -->
+<section id="troubleshooting">
+<h2><span class="num">9</span>Troubleshooting</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Problem</th><th>Likely cause</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Design does not appear on a part</td><td>SVG group id differs from the mesh name, or the part has no UV map</td><td>Rename so they match exactly; unwrap the mesh and re-export both files</td></tr>
+<tr><td>Design in the wrong place or stretched</td><td>SVG outlines moved or rescaled after export, or UVs are stretched</td><td>Re-export the UV layout and redraw; fix UVs until checker squares are even</td></tr>
+<tr><td>Text mirrored or upside down on the back</td><td>Back face not turned in the UV, or turned with a Mapping node, which export drops</td><td>Turn the back face's UVs directly; check with the Color Grid from behind</td></tr>
+<tr><td>Front design appears on the back</td><td>SVG groups swapped, or ids don't match the meshes</td><td>Check <code>Front1</code> / <code>Back1</code> ids against the GLB mesh names</td></tr>
+<tr><td>Design stretched on one face</td><td>Design-area canvas not in the face's proportions</td><td>Re-export the UV layout at 1024 × (1024 × height ÷ width)</td></tr>
+<tr><td>Grey edge on the model</td><td>Outline doesn't reach the canvas edge</td><td>Make the outline cover the whole canvas</td></tr>
+<tr><td>A print surface is invisible</td><td>It sits inside a solid part</td><td>Move it just outside the body surface (about 0.05 mm)</td></tr>
+<tr><td>Model tiny, huge or off-centre</td><td>Transforms not applied or not scaled to the designer box</td><td>Apply all transforms, scale to fit 6.333 × 4.890 × 8.711, centre on origin</td></tr>
+<tr><td>Model lying on its side</td><td>Exported without +Y Up, or rotation not applied</td><td>Apply rotation and re-export with +Y Up</td></tr>
+<tr><td>Template fails to load</td><td>Over 300 paths, clipPath, gradients, <code>&lt;style&gt;</code> tag or classes</td><td>Merge paths, remove clipping and gradients, re-save with inline style attributes</td></tr>
+<tr><td>Text jumps to the top-left</td><td>x/y only on <code>&lt;tspan&gt;</code>, not on <code>&lt;text&gt;</code></td><td>Add the same x/y to the <code>&lt;text&gt;</code> element</td></tr>
+<tr><td>Wrong font in the designer</td><td>Font not enabled in the designer</td><td>Enable the font, or change it in the template</td></tr>
+<tr><td>Preview loads slowly</td><td>GLB too heavy</td><td>Reduce polygons (Decimate modifier), compress textures; aim under 5 MB</td></tr>
+</tbody></table></div>
+</section>
+
+<!-- 10 -->
+<section id="resources">
+<h2><span class="num">10</span>Documentation and tools</h2>
+<h3>Reference documentation</h3>
+<ul>
+<li><a href="https://docs.blender.org/manual/en/latest/addons/import_export/scene_gltf2.html">Blender Manual: glTF 2.0</a> — export settings and supported materials</li>
+<li><a href="https://docs.blender.org/manual/en/latest/modeling/meshes/editing/uv.html">Blender Manual: UV unwrapping</a> — seams, unwrap methods, Export UV Layout</li>
+<li><a href="https://www.khronos.org/gltf/">Khronos glTF 2.0</a> — the file format behind GLB</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element">MDN: SVG element reference</a> — <code>&lt;g&gt;</code>, <code>&lt;text&gt;</code>, <code>&lt;tspan&gt;</code>, <code>&lt;image&gt;</code></li>
+<li><a href="https://gltf-viewer.donmccurdy.com/">glTF Viewer</a> — check a GLB in the browser</li>
+</ul>
+</section>
+</main>
+</div>
+
+<footer class="foot"><div class="wrap">3D Designer — Print Destination setup guide (3D + SVG). Other guides: <a href="chubby-gorilla.html">3D only</a> · <a href="customtees.html">SVG only</a></div></footer>
+
+<script>
+// Show a labelled placeholder until a screenshot file exists.
+document.querySelectorAll('figure.shot img').forEach(function (img) {
+  function miss() { img.closest('figure').classList.add('missing'); }
+  if (img.complete && img.naturalWidth === 0) miss();
+  img.addEventListener('error', miss);
+});
+</script>
+</body>
+</html>

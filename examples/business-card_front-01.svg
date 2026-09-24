@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 208" width="3.543in" height="2.165in">
+  <!-- Fonts required: Poppins 400/700 -->
+  <g id="Layer_1" data-name="Background"><rect x="0" y="0" width="340" height="208" style="fill:#0B3C5D;"/></g>
+  <g id="Elem-1" data-name="Accent Bar"><rect x="24" y="84" width="5" height="44" style="fill:#F2A541;"/></g>
+  <g id="Text-1" data-name="Text-1">
+    <text x="40" y="106" style="font-family:Poppins, Arial, sans-serif;font-size:26px;font-weight:700;fill:#FFFFFF;">
+      <tspan x="40" y="106">JANE SMITH</tspan>
+    </text>
+  </g>
+  <g id="Text-2" data-name="Text-2">
+    <text x="41" y="126" style="font-family:Poppins, Arial, sans-serif;font-size:12px;font-weight:400;fill:#C8D7E6;">
+      <tspan x="41" y="126">Graphic Designer</tspan>
+    </text>
+  </g>
+</svg>
