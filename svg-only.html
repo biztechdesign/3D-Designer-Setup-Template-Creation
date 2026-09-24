@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>CustomTees Template Guide</title>
-<meta name="description" content="CustomTees: creating SVG artwork templates for apparel, following the Baby Shower reference file.">
+<title>SVG Artwork Template Guide</title>
+<meta name="description" content="Creating SVG artwork templates for apparel, following the Baby Shower reference file.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
@@ -14,8 +14,8 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="index.html">3D Designer</a>
-    <span class="crumb">CustomTees · SVG only</span>
-    <nav class="switch" aria-label="Other guides"><a href="chubby-gorilla.html">3D only</a><a href="print-destination.html">3D + SVG</a><a href="customtees.html" aria-current="page">SVG only</a></nav>
+    <span class="crumb">SVG only</span>
+    <nav class="switch" aria-label="Other guides"><a href="3d-only.html">3D only</a><a href="3d-and-svg.html">3D + SVG</a><a href="svg-only.html" aria-current="page">SVG only</a></nav>
   </div>
 </header>
 
@@ -35,7 +35,7 @@
 </nav>
 
 <main>
-<p class="kicker">CustomTees · Updated 24 Sep 2026</p>
+<p class="kicker">SVG only · Updated 24 Sep 2026</p>
 <h1>Apparel Artwork Templates</h1>
 <p class="lead">How to create ready-made artwork (SVG) that shoppers personalise on t-shirts, hoodies and other apparel. There are no 3D files: you only supply the artwork. Every template follows the structure of our reference file, <a href="examples/baby-shower.svg" download>Baby Shower.svg</a>.</p>
 
@@ -43,7 +43,7 @@
 <section id="overview">
 <h2><span class="num">1</span>Before you start</h2>
 <p>A template is one SVG made of two parts: <strong>live text</strong> the shopper can change, and <strong>flat vector shapes</strong> that make up the artwork. The garment colour shows through everywhere else.</p>
-<figure class="shot" data-shot="ct-c02-structure"><img src="images/ct-c02-structure.png" alt="Baby Shower artwork on a transparent background beside its layer structure: TEXT with three live text lines and SHAPES with five named groups, 24 paths in total" loading="lazy"><figcaption>The reference file: a <code>TEXT</code> group with the live text, and a <code>SHAPES</code> group split into named artwork groups. 24 paths in total.</figcaption></figure>
+<figure class="shot" data-shot="apparel-c02-structure"><img src="images/apparel-c02-structure.png" alt="Baby Shower artwork on a transparent background beside its layer structure: TEXT with three live text lines and SHAPES with five named groups, 24 paths in total" loading="lazy"><figcaption>The reference file: a <code>TEXT</code> group with the live text, and a <code>SHAPES</code> group split into named artwork groups. 24 paths in total.</figcaption></figure>
 <ol class="flow" aria-label="Workflow">
   <li>Canvas<small>print-area ratio</small></li>
   <li>Draw artwork<small>flat colours</small></li>
@@ -81,7 +81,7 @@
 <h2><span class="num">3</span>Create the artwork SVG</h2>
 <ol class="steps">
 <li><strong>Set the canvas.</strong> File → New, units Pixels, in the proportions of the print area. The reference is <strong>720 × 1080 px</strong> (2 : 3, portrait), which suits a full front or back. Use Color Mode RGB.
-<figure class="shot" data-shot="ct-c01-ai-new-document"><img src="images/ct-c01-ai-new-document.png" alt="Illustrator New Document dialog set to baby-shower_front, 720 by 1080 pixels, RGB" loading="lazy"><figcaption>File → New: name, 720 × 1080 px, units Pixels, Color Mode RGB.</figcaption></figure></li>
+<figure class="shot" data-shot="apparel-c01-ai-new-document"><img src="images/apparel-c01-ai-new-document.png" alt="Illustrator New Document dialog set to baby-shower_front, 720 by 1080 pixels, RGB" loading="lazy"><figcaption>File → New: name, 720 × 1080 px, units Pixels, Color Mode RGB.</figcaption></figure></li>
 <li><strong>Draw with flat colours only.</strong> Every shape is a solid fill. Leave the background empty so the garment colour shows. Keep the design within the canvas with a small margin all round.</li>
 <li><strong>Put all text in one <code>TEXT</code> layer.</strong> Each line is its own live text object (<code>YOUR TEXT HERE</code>, <code>BABY</code>, <code>SHOWER</code>), so shoppers can edit each one. Don't outline text.</li>
 <li><strong>Put all artwork in one <code>SHAPES</code> layer</strong>, split into one sub-group per element: <code>OTHER_SHAPS</code>, <code>SHIRTS_AND_ROPES</code>, <code>L_BALLOON</code>, <code>R_BALLOON</code>, <code>BABY_CART</code>. Illustrator saves each group name as the <code>id</code> (spaces become underscores) and keeps the original in <code>data-name</code>.</li>
@@ -89,7 +89,7 @@
 <li><strong>Remove what isn't allowed.</strong> No gradients, mesh gradients, clipping masks (<code>clipPath</code>), opacity masks, placed images, effects or shadows. Expand appearance and strokes into plain fills.</li>
 <li><strong>Save.</strong> File → Save As → SVG, then More Options: SVG 1.1, Preserve Illustrator Editing Capabilities off, <strong>CSS Properties = Presentation Attributes</strong> (so colours are saved as <code>fill="…"</code>, like the reference). Leave Responsive ticked; the reference has only a <code>viewBox</code>.</li>
 <li><strong>Check it in a text editor.</strong> Compare it with the reference structure below.
-<figure class="shot" data-shot="ct-c03-svg-structure"><img src="images/ct-c03-svg-structure.png" alt="Baby Shower SVG source with the svg viewBox, the TEXT group with three text elements and the SHAPES group with five named groups" loading="lazy"><figcaption>The reference source (paths shortened): (1) <code>viewBox</code> only, (2) <code>TEXT</code> group with one <code>&lt;text&gt;</code> per line, positioned with <code>transform="translate(…)"</code>, (3) <code>SHAPES</code> group with named sub-groups, one path per colour.</figcaption></figure></li>
+<figure class="shot" data-shot="apparel-c03-svg-structure"><img src="images/apparel-c03-svg-structure.png" alt="Baby Shower SVG source with the svg viewBox, the TEXT group with three text elements and the SHAPES group with five named groups" loading="lazy"><figcaption>The reference source (paths shortened): (1) <code>viewBox</code> only, (2) <code>TEXT</code> group with one <code>&lt;text&gt;</code> per line, positioned with <code>transform="translate(…)"</code>, (3) <code>SHAPES</code> group with named sub-groups, one path per colour.</figcaption></figure></li>
 </ol>
 <pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1080"&gt;
   &lt;g id="TEXT"&gt;
@@ -201,7 +201,7 @@
 </main>
 </div>
 
-<footer class="foot"><div class="wrap">3D Designer — CustomTees template guide (SVG only). Other guides: <a href="chubby-gorilla.html">3D only</a> · <a href="print-destination.html">3D + SVG</a></div></footer>
+<footer class="foot"><div class="wrap">3D Designer — SVG-only template guide. Other guides: <a href="3d-only.html">3D only</a> · <a href="3d-and-svg.html">3D + SVG</a></div></footer>
 
 <script>
 document.querySelectorAll('figure.shot img').forEach(function (img) {

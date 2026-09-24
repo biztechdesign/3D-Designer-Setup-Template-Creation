@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Chubby Gorilla Setup Guide</title>
-<meta name="description" content="Chubby Gorilla: preparing 3D-only products (5-part GLB + per-part images) for the 3D Designer.">
+<title>3D-Only Setup Guide</title>
+<meta name="description" content="Preparing 3D-only products (5-part GLB + per-part images) for the 3D Designer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
@@ -14,8 +14,8 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="index.html">3D Designer</a>
-    <span class="crumb">Chubby Gorilla · 3D only</span>
-    <nav class="switch" aria-label="Other guides"><a href="chubby-gorilla.html" aria-current="page">3D only</a><a href="print-destination.html">3D + SVG</a><a href="customtees.html">SVG only</a></nav>
+    <span class="crumb">3D only</span>
+    <nav class="switch" aria-label="Other guides"><a href="3d-only.html" aria-current="page">3D only</a><a href="3d-and-svg.html">3D + SVG</a><a href="svg-only.html">SVG only</a></nav>
   </div>
 </header>
 
@@ -36,7 +36,7 @@
 </nav>
 
 <main>
-<p class="kicker">Chubby Gorilla · Updated 24 Sep 2026</p>
+<p class="kicker">3D only · Updated 24 Sep 2026</p>
 <h1>3D Products: Bottles, Tubes &amp; Containers</h1>
 <p class="lead">How to turn a bottle, tube or container model into a 3D Designer product. Shoppers choose a colour and finish for each part and add their artwork to the body label and the cap label. This workflow has no SVG files.</p>
 
@@ -55,7 +55,7 @@
 </tbody></table></div>
 
 <ol class="flow" aria-label="Workflow">
-  <li>Source model<small>client OBJ, in mm</small></li>
+  <li>Source model<small>source OBJ, in mm</small></li>
   <li>Clean up in Blender<small>5 parts, names</small></li>
   <li>Materials &amp; labels<small>grey + clear labels</small></li>
   <li>UVs &amp; export<small>GLB named by SKU</small></li>
@@ -83,7 +83,7 @@
 <tr><td>Plastic parts material</td><td><code>Designarea</code>, solid light grey <code>#E5E5E5</code>, no texture</td></tr>
 <tr><td>Label materials</td><td><code>BodyLabel</code> / <code>OuterClosureLabel</code>: transparent placeholder image, Render Method Blended</td></tr>
 <tr><td>UV map</td><td>One per mesh, named <code>UVMap</code></td></tr>
-<tr><td>Export</td><td>glTF Binary (.glb), <strong>+Y Up</strong>, named by SKU (e.g. <code>CGABB1-1LTR.glb</code>)</td></tr>
+<tr><td>Export</td><td>glTF Binary (.glb), <strong>+Y Up</strong>, named by product code (e.g. <code>BOTTLE-1L.glb</code>)</td></tr>
 </tbody></table></div>
 <figure class="shot" data-shot="a00-blender-units"><img src="images/a00-blender-units.png" alt="Blender Scene Properties with Unit System set to Metric and Length set to Millimeters" loading="lazy"><figcaption>Blender → Scene Properties → Units: Metric, Millimeters.</figcaption></figure>
 </section>
@@ -91,28 +91,28 @@
 <!-- 3 -->
 <section id="part-a">
 <h2><span class="num">3</span>Part A: Build the 3D object (GLB)</h2>
-<p>The screenshots in this section show the reference product <strong>CGABB1-1LTR</strong> (Aviator Base Bottle, 1 L). Open its GLB next to your own work and match it.</p>
+<p>The screenshots in this section show a 1 L reference bottle. Open your reference GLB next to your own work and match it.</p>
 <ol class="steps">
-<li><strong>Import the client model and check its size.</strong> File → Import → Wavefront (.obj). Press N, open the Item tab and compare Dimensions with the real product. Keep an untouched copy of the original OBJ.
-<figure class="shot" data-shot="cg-a01-import-dimensions"><img src="images/cg-a01-import-dimensions.png" alt="Bottle in the Blender viewport with the Item panel showing its dimensions" loading="lazy"><figcaption>Sidebar (N) → Item → Dimensions.</figcaption></figure></li>
+<li><strong>Import the source model and check its size.</strong> File → Import → Wavefront (.obj). Press N, open the Item tab and compare Dimensions with the real product. Keep an untouched copy of the original OBJ.
+<figure class="shot" data-shot="bottle-a01-import-dimensions"><img src="images/bottle-a01-import-dimensions.png" alt="Bottle in the Blender viewport with the Item panel showing its dimensions" loading="lazy"><figcaption>Sidebar (N) → Item → Dimensions.</figcaption></figure></li>
 <li><strong>Reduce the model to the 5 parts.</strong> Join pieces that are one moulded part in real life into one mesh. Delete (don't hide) anything that is not in the parts table: liners, seal discs, closure rings, dip tubes, cameras and lights.</li>
 <li><strong>Name every part.</strong> Each part has an object name and a mesh name. The mesh name is the object name plus <code>1</code>. The three plastic parts sit under one parent empty; the two labels sit at the top level.
-<figure class="shot" data-shot="cg-a02-outliner"><img src="images/cg-a02-outliner.png" alt="Blender Outliner showing Body Label, Object with Body, Inner Closure and Outer Closure, and Outer Closure Label" loading="lazy"><figcaption>Outliner of the reference GLB: object names (orange) and mesh names ending in 1 (green), with each mesh's material.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-a02-outliner"><img src="images/bottle-a02-outliner.png" alt="Blender Outliner showing Body Label, Object with Body, Inner Closure and Outer Closure, and Outer Closure Label" loading="lazy"><figcaption>Outliner of the reference GLB: object names (orange) and mesh names ending in 1 (green), with each mesh's material.</figcaption></figure></li>
 <li><strong>Assign <code>Designarea</code> to the plastic parts</strong> (<code>Body1</code>, <code>Outer Closure1</code>, <code>Inner Closure1</code>): Principled BSDF, Base Color <code>#E5E5E5</code>, Metallic 0, Roughness 0.5. Nothing may be connected to Base Color; the designer applies colours and finishes on top of this grey.
-<figure class="shot" data-shot="cg-a03-designarea-material"><img src="images/cg-a03-designarea-material.png" alt="Material Properties of Body showing the Designarea material" loading="lazy"><figcaption>Material Properties → <code>Designarea</code>: Base Color #E5E5E5, Metallic 0, Roughness 0.5.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-a03-designarea-material"><img src="images/bottle-a03-designarea-material.png" alt="Material Properties of Body showing the Designarea material" loading="lazy"><figcaption>Material Properties → <code>Designarea</code>: Base Color #E5E5E5, Metallic 0, Roughness 0.5.</figcaption></figure></li>
 <li><strong>Build the body label (<code>Body Label1</code>).</strong> A clean, evenly spaced cylinder that sits <strong>0.05 mm outside</strong> the body over the area a real label covers. Don't shrink-wrap it to the body, or its edges come out jagged. Shade it smooth.
-<figure class="shot" data-shot="cg-a05-body-label"><img src="images/cg-a05-body-label.png" alt="Body Label selected on the bottle, outlined in orange" loading="lazy"><figcaption><code>Body Label</code> selected: a band over the label area, just outside the body.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-a05-body-label"><img src="images/bottle-a05-body-label.png" alt="Body Label selected on the bottle, outlined in orange" loading="lazy"><figcaption><code>Body Label</code> selected: a band over the label area, just outside the body.</figcaption></figure></li>
 <li><strong>Build the cap label (<code>Outer Closure Label1</code>).</strong> A flat disc on the top of the outer closure, just above its surface. If the lid has embossed text around the edge, keep the disc inside that text ring.
-<figure class="shot" data-shot="cg-a06-closure-label"><img src="images/cg-a06-closure-label.png" alt="Outer Closure Label disc selected on top of the cap" loading="lazy"><figcaption><code>Outer Closure Label</code> selected: a disc on the cap top.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-a06-closure-label"><img src="images/bottle-a06-closure-label.png" alt="Outer Closure Label disc selected on top of the cap" loading="lazy"><figcaption><code>Outer Closure Label</code> selected: a disc on the cap top.</figcaption></figure></li>
 <li><strong>Set up the label materials.</strong> Give <code>Body Label1</code> the material <code>BodyLabel</code> and <code>Outer Closure Label1</code> the material <code>OuterClosureLabel</code>. In each, connect an <strong>Image Texture</strong> node to the Principled BSDF: <code>Color</code> → <code>Base Color</code> and <code>Alpha</code> → <code>Alpha</code>. Load a <strong>fully transparent PNG</strong> named like the material:
 <ul>
 <li><code>BodyLabel</code>: 2048 px wide, height matching the label's shape (1525 px on the reference bottle)</li>
 <li><code>OuterClosureLabel</code>: 2048 × 2048 px</li>
 </ul>
 The labels stay invisible until the shopper adds artwork, so the body colour shows through.
-<figure class="shot" data-shot="cg-a04-label-material-nodes"><img src="images/cg-a04-label-material-nodes.png" alt="Shader Editor showing an Image Texture node feeding Base Color and Alpha of the Principled BSDF" loading="lazy"><figcaption>Shader Editor, <code>BodyLabel</code>: Image Texture Color → Base Color, Alpha → Alpha.</figcaption></figure>
+<figure class="shot" data-shot="bottle-a04-label-material-nodes"><img src="images/bottle-a04-label-material-nodes.png" alt="Shader Editor showing an Image Texture node feeding Base Color and Alpha of the Principled BSDF" loading="lazy"><figcaption>Shader Editor, <code>BodyLabel</code>: Image Texture Color → Base Color, Alpha → Alpha.</figcaption></figure>
 Then, in Material Properties → Settings, turn on (1) Backface Culling and set (2) Render Method to <strong>Blended</strong>.
-<figure class="shot" data-shot="cg-a09-label-settings"><img src="images/cg-a09-label-settings.png" alt="Material Settings with Backface Culling on and Render Method Blended" loading="lazy"><figcaption>Material Properties → Settings: (1) Backface Culling on, (2) Render Method Blended.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-a09-label-settings"><img src="images/bottle-a09-label-settings.png" alt="Material Settings with Backface Culling on and Render Method Blended" loading="lazy"><figcaption>Material Properties → Settings: (1) Backface Culling on, (2) Render Method Blended.</figcaption></figure></li>
 <li><strong>Unwrap the UVs.</strong> One map per mesh, named <code>UVMap</code>, no overlaps.
 <ul>
 <li><code>Body Label1</code>: one band across the full 0–1 square, seam at the back, front of the bottle centred.</li>
@@ -120,8 +120,8 @@ Then, in Material Properties → Settings, turn on (1) Backface Culling and set 
 <li>Plastic parts: cylindrical unwrap for straight shapes, conical for tapered ones. Avoid Smart UV Project on round parts; it gives uneven cell sizes.</li>
 </ul>
 Check each label by temporarily loading Blender's Color Grid image (Image → New → Generated Type: Color Grid) into its Image Texture node. Cells must look square on the bottle and letters must read the right way round. Put the transparent image back afterwards.
-<figure class="shot" data-shot="cg-a07-uv-color-grid"><img src="images/cg-a07-uv-color-grid.png" alt="UV Editor with the Color Grid and the bottle label showing even square cells" loading="lazy"><figcaption>UV Editing workspace: the body label fills the grid (left) and shows square cells on the bottle (right).</figcaption></figure></li>
-<li><strong>Match the reference size.</strong> Scale the whole model uniformly so it matches the reference GLB for its family. The reference 1 L bottle (<code>CGABB1-1LTR</code>) measures about <strong>3.9 × 4.0 × 11.3</strong> units overall. Chubby Gorilla products use this reference size, not the 6.333 × 4.890 × 8.711 box used for flat print products, so don't shrink a bottle to fit that box.</li>
+<figure class="shot" data-shot="bottle-a07-uv-color-grid"><img src="images/bottle-a07-uv-color-grid.png" alt="UV Editor with the Color Grid and the bottle label showing even square cells" loading="lazy"><figcaption>UV Editing workspace: the body label fills the grid (left) and shows square cells on the bottle (right).</figcaption></figure></li>
+<li><strong>Match the reference size.</strong> Scale the whole model uniformly so it matches the reference GLB for its family. The 1 L reference bottle measures about <strong>3.9 × 4.0 × 11.3</strong> units overall. Bottles and containers use this reference size, not the 6.333 × 4.890 × 8.711 box used for flat print products, so don't shrink a bottle to fit that box.</li>
 <li><strong>Export the GLB</strong> named by SKU: File → Export → glTF 2.0.
 <div class="table-wrap"><table>
 <thead><tr><th>Export setting</th><th>Value</th></tr></thead>
@@ -135,7 +135,7 @@ Check each label by temporarily loading Blender's Color Grid image (Image → Ne
 </tbody></table></div>
 <figure class="shot" data-shot="a08-gltf-export"><img src="images/a08-gltf-export.png" alt="Blender glTF 2.0 export dialog with GLB format and +Y Up selected" loading="lazy"><figcaption>glTF 2.0 export with the settings above.</figcaption></figure></li>
 <li><strong>Check the export.</strong> Re-import the GLB into an empty Blender scene, or open it in a browser viewer (<a href="https://gltf-viewer.donmccurdy.com/">glTF Viewer</a> or <a href="https://sandbox.babylonjs.com/">Babylon.js Sandbox</a>). Confirm the 5 mesh names, that the plastic parts are plain grey (not a checker pattern) and that the labels are invisible.
-<figure class="shot" data-shot="cg-a10-gltf-viewer"><img src="images/cg-a10-gltf-viewer.png" alt="CGABB1-1LTR GLB open in the Babylon.js Sandbox, plain grey with invisible labels" loading="lazy"><figcaption>The reference GLB in the Babylon.js Sandbox: plain plastic, labels invisible. Rotate it to check every side.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-a10-gltf-viewer"><img src="images/bottle-a10-gltf-viewer.png" alt="Reference bottle GLB open in the Babylon.js Sandbox, plain grey with invisible labels" loading="lazy"><figcaption>The reference GLB in the Babylon.js Sandbox: plain plastic, labels invisible. Rotate it to check every side.</figcaption></figure></li>
 </ol>
 </section>
 
@@ -143,7 +143,7 @@ Check each label by temporarily loading Blender's Color Grid image (Image → Ne
 <section id="part-b">
 <h2><span class="num">4</span>Part B: Create the part images (PNG)</h2>
 <p>Shoppers see these images when choosing which part to colour. Render one image per mesh, showing the part on its own in plain white plastic. Shoppers pick finishes separately, so the image must show no finish.</p>
-<figure class="shot" data-shot="cg-b02-part-images"><img src="images/cg-b02-part-images.png" alt="The five part images of CGABB1-1LTR: Body1, Outer Closure1, Inner Closure1, Body Label1, Outer Closure Label1" loading="lazy"><figcaption>The 5 part images of the reference product, each named exactly like its mesh.</figcaption></figure>
+<figure class="shot" data-shot="bottle-b02-part-images"><img src="images/bottle-b02-part-images.png" alt="The five part images of the reference bottle: Body1, Outer Closure1, Inner Closure1, Body Label1, Outer Closure Label1" loading="lazy"><figcaption>The 5 part images of the reference product, each named exactly like its mesh.</figcaption></figure>
 <div class="table-wrap"><table>
 <thead><tr><th>Requirement</th><th>Value</th></tr></thead>
 <tbody>
@@ -157,8 +157,8 @@ Check each label by temporarily loading Blender's Color Grid image (Image → Ne
 <ol class="steps">
 <li><strong>Isolate the part.</strong> In a copy of your .blend, hide every mesh except the one you are rendering and give it a white plastic material (Base Color white, Roughness about 0.4).</li>
 <li><strong>Set up the render.</strong> Render Properties: engine Cycles, Max Samples 256, Denoise on, Film → Transparent on. Output Properties: resolution 3072 × 3072, File Format PNG, Color RGBA, Color Depth 8.
-<figure class="shot" data-shot="cg-b01-output-settings"><img src="images/cg-b01-output-settings.png" alt="Blender Output Properties with 3072 by 3072 resolution and PNG RGBA output" loading="lazy"><figcaption>Output Properties from the reference render file: 3072 × 3072 px, PNG, RGBA.</figcaption></figure>
-<figure class="shot" data-shot="cg-b01-film-transparent"><img src="images/cg-b01-film-transparent.png" alt="Blender Render Properties with the Film panel open and Transparent ticked" loading="lazy"><figcaption>Render Properties → Film → Transparent ticked, so the background renders see-through.</figcaption></figure></li>
+<figure class="shot" data-shot="bottle-b01-output-settings"><img src="images/bottle-b01-output-settings.png" alt="Blender Output Properties with 3072 by 3072 resolution and PNG RGBA output" loading="lazy"><figcaption>Output Properties from the reference render file: 3072 × 3072 px, PNG, RGBA.</figcaption></figure>
+<figure class="shot" data-shot="bottle-b01-film-transparent"><img src="images/bottle-b01-film-transparent.png" alt="Blender Render Properties with the Film panel open and Transparent ticked" loading="lazy"><figcaption>Render Properties → Film → Transparent ticked, so the background renders see-through.</figcaption></figure></li>
 <li><strong>Frame and render.</strong> Aim the camera at a slight three-quarter angle so the part's shape reads, with a small margin all round. Render (F12) and save as <code>&lt;mesh name&gt;.png</code>.</li>
 <li><strong>Fit the 1 MB limit.</strong> If a file is over 1 MB, scale it down (keeping it square) until it fits. The reference images are 1900–3060 px square. Do not reduce them to 256 colours.</li>
 </ol>
@@ -189,7 +189,7 @@ Check each label by temporarily loading Blender's Color Grid image (Image → Ne
 <!-- 6 -->
 <section id="avoid">
 <h2><span class="num">6</span>What to avoid</h2>
-<p>These are the mistakes that most often break a Chubby Gorilla product. Each one looks harmless in Blender but shows up in the designer.</p>
+<p>These are the mistakes that most often break a 3D-only product. Each one looks harmless in Blender but shows up in the designer.</p>
 <h3>Model and parts</h3>
 <div class="table-wrap"><table class="avoid">
 <thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
@@ -289,7 +289,7 @@ Check each label by temporarily loading Blender's Color Grid image (Image → Ne
 </main>
 </div>
 
-<footer class="foot"><div class="wrap">3D Designer — Chubby Gorilla setup guide (3D only). Other guides: <a href="print-destination.html">3D + SVG</a> · <a href="customtees.html">SVG only</a></div></footer>
+<footer class="foot"><div class="wrap">3D Designer — 3D-only setup guide. Other guides: <a href="3d-and-svg.html">3D + SVG</a> · <a href="svg-only.html">SVG only</a></div></footer>
 
 <script>
 document.querySelectorAll('figure.shot img').forEach(function (img) {

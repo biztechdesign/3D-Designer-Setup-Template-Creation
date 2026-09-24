@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Print Destination Setup Guide</title>
-<meta name="description" content="Print Destination: preparing 3D products (GLB + design-area SVG) and print template SVGs for the 3D Designer.">
+<title>3D + SVG Setup Guide</title>
+<meta name="description" content="Preparing 3D products (GLB + design-area SVG) and print template SVGs for the 3D Designer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
@@ -14,8 +14,8 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="index.html">3D Designer</a>
-    <span class="crumb">Print Destination · 3D + SVG</span>
-    <nav class="switch" aria-label="Other guides"><a href="chubby-gorilla.html">3D only</a><a href="print-destination.html" aria-current="page">3D + SVG</a><a href="customtees.html">SVG only</a></nav>
+    <span class="crumb">3D + SVG</span>
+    <nav class="switch" aria-label="Other guides"><a href="3d-only.html">3D only</a><a href="3d-and-svg.html" aria-current="page">3D + SVG</a><a href="svg-only.html">SVG only</a></nav>
   </div>
 </header>
 
@@ -37,7 +37,7 @@
 </nav>
 
 <main>
-<p class="kicker">Print Destination · Updated 24 Sep 2026</p>
+<p class="kicker">3D + SVG · Updated 24 Sep 2026</p>
 <h1>3D Products &amp; Print Templates</h1>
 <p class="lead">How to prepare printed products such as business cards, brochures and QR code stands so shoppers can design them on a flat canvas and see the result on a 3D model. Each product needs a 3D model and an SVG that match each other exactly. This guide uses a two-sided business card, front and back, as the example throughout.</p>
 
@@ -52,7 +52,7 @@
 <tr><td>Design-area SVG (.svg)</td><td>A flat map of one printable face, drawn from that face's UV map. One file per face. What the shopper puts on it appears on that face of the model.</td><td><a href="examples/business-card_front_designarea.svg" download><code>business-card_front_designarea.svg</code></a> (group <code>Front1</code>) and <a href="examples/business-card_back_designarea.svg" download><code>business-card_back_designarea.svg</code></a> (group <code>Back1</code>)</td></tr>
 <tr><td>Template SVGs (.svg)</td><td>Ready-made designs, one per printable face, that shoppers edit.</td><td><a href="examples/business-card_front-01.svg" download><code>business-card_front-01.svg</code></a>, <a href="examples/business-card_back-01.svg" download><code>business-card_back-01.svg</code></a></td></tr>
 </tbody></table></div>
-<figure class="shot" data-shot="pd-match-front-back"><img src="images/pd-match-front-back.png" alt="Design-area SVG with Front1 and Back1 areas beside the 3D business card showing the same artwork on its front and back" loading="lazy"><figcaption>How the files work together: artwork inside <code>Front1</code> in the SVG appears on the front of the 3D card, and artwork inside <code>Back1</code> appears on the back.</figcaption></figure>
+<figure class="shot" data-shot="card-match-front-back"><img src="images/card-match-front-back.png" alt="Design-area SVG with Front1 and Back1 areas beside the 3D business card showing the same artwork on its front and back" loading="lazy"><figcaption>How the files work together: artwork inside <code>Front1</code> in the SVG appears on the front of the 3D card, and artwork inside <code>Back1</code> appears on the back.</figcaption></figure>
 <ol class="flow" aria-label="Workflow">
   <li>Source model<small>real size, in mm</small></li>
   <li>Printable faces<small>Front1, Back1…</small></li>
@@ -98,7 +98,7 @@
 <p>The goal is a light GLB where every printable face is its own named mesh with one tidy UV map, scaled to fit the designer's viewing box.</p>
 <ol class="steps">
 <li><strong>Build or import the product at real size.</strong> A business card is 90 × 55 mm and about 0.35 mm thick. Press N and check the Dimensions against the real product.
-<figure class="shot" data-shot="pd-a01-card-dimensions"><img src="images/pd-a01-card-dimensions.png" alt="Business card in Blender with the Item panel showing 90 by 0.35 by 55 mm" loading="lazy"><figcaption>Sidebar (N) → Item → Dimensions: 90 × 0.35 × 55 mm.</figcaption></figure></li>
+<figure class="shot" data-shot="card-a01-card-dimensions"><img src="images/card-a01-card-dimensions.png" alt="Business card in Blender with the Item panel showing 90 by 0.35 by 55 mm" loading="lazy"><figcaption>Sidebar (N) → Item → Dimensions: 90 × 0.35 × 55 mm.</figcaption></figure></li>
 <li><strong>Make one mesh per printable face.</strong> Add a flat plane over each face shoppers can print on, sitting about <strong>0.05 mm</strong> outside the product so it isn't hidden. The product body itself (card edge, stand base, acrylic) keeps a plain non-printable material.
 <div class="table-wrap"><table>
 <thead><tr><th>Product</th><th>Printable meshes</th></tr></thead>
@@ -112,18 +112,18 @@
 Back   (Empty)  →  Back1   (Mesh, Designarea)
 Card   (Empty)  →  Card1   (Mesh, paper; not printable)</code></pre></li>
 <li><strong>Assign the <code>Designarea</code> material</strong> to every printable mesh: Principled BSDF, Base Color light grey <code>#E5E5E5</code>, Metallic 0, Roughness 0.5. No textures, colours or finishes; the designer applies the shopper's design.
-<figure class="shot" data-shot="pd-a03-designarea-material"><img src="images/pd-a03-designarea-material.png" alt="Material Properties of Front1 showing the Designarea material" loading="lazy"><figcaption>Material Properties → <code>Designarea</code>: Base Color #E5E5E5, Metallic 0, Roughness 0.5.</figcaption></figure></li>
+<figure class="shot" data-shot="card-a03-designarea-material"><img src="images/card-a03-designarea-material.png" alt="Material Properties of Front1 showing the Designarea material" loading="lazy"><figcaption>Material Properties → <code>Designarea</code>: Base Color #E5E5E5, Metallic 0, Roughness 0.5.</figcaption></figure></li>
 <li><strong>Give each face its own UV map.</strong> Unwrap each printable mesh on its own so the face fills the <strong>whole</strong> 0–1 UV square. Front and back are never placed together in one UV layout.
 <ul>
 <li>The design-area SVG for the face uses the same proportions (90 : 55 → 1024 × 626), so nothing stretches.</li>
 <li>Turn the back face in the UV itself so its artwork reads correctly when the product is turned over. Don't use a Mapping node; it is lost on export.</li>
 </ul>
 Check with Blender's Color Grid on each face: cells stay square and letters read the right way round on <strong>both</strong> sides.
-<figure class="shot" data-shot="pd-a05-uv-front-back"><img src="images/pd-a05-uv-front-back.png" alt="Front1 and Back1 each with its own full UV square, beside the card's front and back showing the colour grid" loading="lazy"><figcaption>Each face has its own full UV square. The whole grid (A1–H8) appears on the front and again on the back, both reading correctly.</figcaption></figure></li>
+<figure class="shot" data-shot="card-a05-uv-front-back"><img src="images/card-a05-uv-front-back.png" alt="Front1 and Back1 each with its own full UV square, beside the card's front and back showing the colour grid" loading="lazy"><figcaption>Each face has its own full UV square. The whole grid (A1–H8) appears on the front and again on the back, both reading correctly.</figcaption></figure></li>
 <li><strong>Apply transforms.</strong> Select all, then Object → Apply → All Transforms, so rotation is 0 and scale is 1.
 <figure class="shot" data-shot="a06-apply-transforms"><img src="images/a06-apply-transforms.png" alt="Object menu open at Apply, All Transforms" loading="lazy"><figcaption>Object → Apply → All Transforms (Ctrl+A).</figcaption></figure></li>
 <li><strong>Scale to the designer box.</strong> Save an <code>_mm</code> backup first. Then scale the whole model uniformly so it fits inside <strong>6.333 (W) × 4.890 (D) × 8.711 (H)</strong> units, centred on the origin. Wide products like business cards are limited by width: 90 mm becomes 6.333.
-<figure class="shot" data-shot="pd-a07-fit-box"><img src="images/pd-a07-fit-box.png" alt="Business card centred inside a wireframe box of 6.333 by 4.890 by 8.711 units" loading="lazy"><figcaption>The card fills the box's width. Delete the box before exporting.</figcaption></figure></li>
+<figure class="shot" data-shot="card-a07-fit-box"><img src="images/card-a07-fit-box.png" alt="Business card centred inside a wireframe box of 6.333 by 4.890 by 8.711 units" loading="lazy"><figcaption>The card fills the box's width. Delete the box before exporting.</figcaption></figure></li>
 <li><strong>Export the GLB.</strong> File → Export → glTF 2.0:
 <div class="table-wrap"><table>
 <thead><tr><th>Export setting</th><th>Value</th></tr></thead>
@@ -151,7 +151,7 @@ Check with Blender's Color Grid on each face: cells stay square and letters read
 <li><strong>Keep it simple.</strong> One flat fill on the group, e.g. <code>style="fill:#ccc;"</code>. No strokes, gradients, clipPath or classes.</li>
 <li><strong>Save and check.</strong> File → Save As → SVG, then More Options: SVG 1.1, Preserve Illustrator Editing Capabilities off, CSS Properties = Style Attributes. Compare both files with the example.
 <figure class="shot" data-shot="b05-ai-svg-options"><img src="images/b05-ai-svg-options.png" alt="Illustrator SVG Options dialog with SVG 1.1 and Style Attributes selected" loading="lazy"><figcaption>SVG Options: (1) SVG 1.1, (2) Preserve Illustrator Editing Capabilities off, (3) CSS Properties = Style Attributes. Leave Responsive unticked.</figcaption></figure>
-<figure class="shot" data-shot="pd-b-designarea-code"><img src="images/pd-b-designarea-code.png" alt="Source of the front and back design-area SVGs, each 1024 by 626 with one group named Front1 or Back1" loading="lazy"><figcaption>The two design-area files: same size, one group each, named <code>Front1</code> and <code>Back1</code> to match the meshes.</figcaption></figure></li>
+<figure class="shot" data-shot="card-b-designarea-code"><img src="images/card-b-designarea-code.png" alt="Source of the front and back design-area SVGs, each 1024 by 626 with one group named Front1 or Back1" loading="lazy"><figcaption>The two design-area files: same size, one group each, named <code>Front1</code> and <code>Back1</code> to match the meshes.</figcaption></figure></li>
 </ol>
 <p class="note">The coordinate link is fixed: SVG x = U × canvas width and SVG y = (1 − V) × canvas height, for each face on its own. Never move, rotate or rescale the outline after export, and keep the canvas in the face's proportions, or the design stretches on the model.</p>
 </section>
@@ -160,7 +160,7 @@ Check with Blender's Color Grid on each face: cells stay square and letters read
 <section id="part-c">
 <h2><span class="num">5</span>Part C: Create the template SVGs</h2>
 <p>A template is a ready-made design shoppers personalise. Make <strong>one template per printable face</strong>: a business card has a front template and a back template, and they are used as a pair.</p>
-<figure class="shot" data-shot="pd-c02-templates-front-back"><img src="images/pd-c02-templates-front-back.png" alt="Business card front template in navy with a name and back template in orange with contact details" loading="lazy"><figcaption>A matching pair: <a href="examples/business-card_front-01.svg" download>front</a> and <a href="examples/business-card_back-01.svg" download>back</a> templates (click to download).</figcaption></figure>
+<figure class="shot" data-shot="card-c02-templates-front-back"><img src="images/card-c02-templates-front-back.png" alt="Business card front template in navy with a name and back template in orange with contact details" loading="lazy"><figcaption>A matching pair: <a href="examples/business-card_front-01.svg" download>front</a> and <a href="examples/business-card_back-01.svg" download>back</a> templates (click to download).</figcaption></figure>
 <ol class="steps">
 <li><strong>Set the canvas from the product size.</strong> Canvas in px = size in mm × 96 ÷ 25.4. Set <code>viewBox</code> in px and <code>width</code>/<code>height</code> in inches.
 <div class="table-wrap"><table>
@@ -171,7 +171,7 @@ Check with Blender's Color Grid on each face: cells stay square and letters read
 <tr><td>A5</td><td>148 × 210 mm</td><td>559 × 794</td><td>5.827in × 8.268in</td></tr>
 <tr><td>A4</td><td>210 × 297 mm</td><td>794 × 1122</td><td>8.268in × 11.693in</td></tr>
 </tbody></table></div>
-<figure class="shot" data-shot="pd-c01-ai-new-document"><img src="images/pd-c01-ai-new-document.png" alt="Illustrator New Document dialog set to business-card_front-01, 340 by 208 pixels, RGB" loading="lazy"><figcaption>Illustrator → File → New for a business card: name, 340 × 208 px, units Pixels, Color Mode RGB.</figcaption></figure></li>
+<figure class="shot" data-shot="card-c01-ai-new-document"><img src="images/card-c01-ai-new-document.png" alt="Illustrator New Document dialog set to business-card_front-01, 340 by 208 pixels, RGB" loading="lazy"><figcaption>Illustrator → File → New for a business card: name, 340 × 208 px, units Pixels, Color Mode RGB.</figcaption></figure></li>
 <li><strong>Design inside the safe zone.</strong> Keep text and logos at least 3 mm (about 12 px) inside the trim line. Take background colours to the edge.</li>
 <li><strong>Build a flat layer list.</strong> Every group is a direct child of the <code>&lt;svg&gt;</code>, with no nested layers:
 <ul>
@@ -184,7 +184,7 @@ Every group needs both <code>id</code> and <code>data-name</code>.</li>
 <li><strong>Keep it light.</strong> At most <strong>300 paths</strong> per file. Merge shapes of the same colour into one compound path, and simplify traced or imported artwork.</li>
 <li><strong>Remove unsupported features.</strong> No <code>clipPath</code>, gradients, mesh gradients, filters or shadows, <code>&lt;style&gt;</code> tag, CSS classes, or <code>transform="matrix(...)"</code>. If a photo or logo is part of the design, place it as a plain <code>&lt;image&gt;</code> at its final size, with no clipping.</li>
 <li><strong>Save and check.</strong> Save as SVG 1.1 with Style Attributes and Responsive unticked (so width and height are kept), then open it in a text editor and compare it with the example.
-<figure class="shot" data-shot="pd-c03-svg-in-editor"><img src="images/pd-c03-svg-in-editor.png" alt="Business card front template source showing viewBox, flat groups and text with tspan" loading="lazy"><figcaption>The saved front template: (1) viewBox in px with width/height in inches, (2) flat groups with id and data-name, (3) x/y on both &lt;text&gt; and &lt;tspan&gt;.</figcaption></figure></li>
+<figure class="shot" data-shot="card-c03-svg-in-editor"><img src="images/card-c03-svg-in-editor.png" alt="Business card front template source showing viewBox, flat groups and text with tspan" loading="lazy"><figcaption>The saved front template: (1) viewBox in px with width/height in inches, (2) flat groups with id and data-name, (3) x/y on both &lt;text&gt; and &lt;tspan&gt;.</figcaption></figure></li>
 </ol>
 <p class="note"><strong>Special templates.</strong> Calendars and coupon or postcard layouts have extra required IDs and data attributes (for example <code>&lt;g id="calendar"&gt;</code> with grid data). Ask us for the matching specification before you build one.</p>
 </section>
@@ -220,7 +220,7 @@ Every group needs both <code>id</code> and <code>data-name</code>.</li>
 <!-- 7 -->
 <section id="avoid">
 <h2><span class="num">7</span>What to avoid</h2>
-<p>These are the mistakes that most often break a Print Destination product. Most of them only show up once the GLB and SVG are used together.</p>
+<p>These are the mistakes that most often break a 3D + SVG product. Most of them only show up once the GLB and SVG are used together.</p>
 <h3>3D object (GLB)</h3>
 <div class="table-wrap"><table class="avoid">
 <thead><tr><th>Avoid</th><th>What goes wrong</th><th>Do instead</th></tr></thead>
@@ -341,7 +341,7 @@ Every group needs both <code>id</code> and <code>data-name</code>.</li>
 </main>
 </div>
 
-<footer class="foot"><div class="wrap">3D Designer — Print Destination setup guide (3D + SVG). Other guides: <a href="chubby-gorilla.html">3D only</a> · <a href="customtees.html">SVG only</a></div></footer>
+<footer class="foot"><div class="wrap">3D Designer — 3D + SVG setup guide. Other guides: <a href="3d-only.html">3D only</a> · <a href="svg-only.html">SVG only</a></div></footer>
 
 <script>
 // Show a labelled placeholder until a screenshot file exists.
